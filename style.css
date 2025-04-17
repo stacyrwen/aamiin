@@ -1,4 +1,4 @@
-Reset dan Base Styles
+/* Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -17,6 +17,8 @@ Reset dan Base Styles
     --text-color: #212529;
     --text-light: #f8f9fa;
     --border-color: #dee2e6;
+    --sidebar-width: 250px;
+    --header-height: 60px;
 }
 
 [data-theme="dark"] {
@@ -28,25 +30,32 @@ Reset dan Base Styles
     --border-color: #4a5568;
 }
 
+html, body {
+    height: 100%;
+}
+
 body {
     background-color: var(--light-bg);
     color: var(--text-color);
     transition: all 0.3s ease;
+    overflow: hidden;
 }
 
 .dashboard {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100vh;
 }
 
 header {
     background-color: var(--primary-color);
     color: white;
-    padding: 1rem 2rem;
+    padding: 0 2rem;
+    height: var(--header-height);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .header-controls {
@@ -64,14 +73,17 @@ header {
 .container {
     display: flex;
     flex: 1;
+    min-height: 0; /* Allows flex children to shrink properly */
 }
 
 .sidebar {
-    width: 250px;
+    width: var(--sidebar-width);
     background-color: var(--light-bg);
     padding: 1.5rem;
     box-shadow: 2px 0 5px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
+    overflow-y: auto;
+    flex-shrink: 0;
 }
 
 .sidebar nav ul {
@@ -108,6 +120,9 @@ header {
     padding: 2rem;
     background-color: var(--light-bg);
     transition: all 0.3s ease;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .todo-header {
@@ -115,6 +130,7 @@ header {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
+    flex-shrink: 0;
 }
 
 .btn-primary {
@@ -129,6 +145,7 @@ header {
     align-items: center;
     gap: 0.5rem;
     transition: background-color 0.2s;
+    white-space: nowrap;
 }
 
 .btn-primary:hover {
@@ -138,6 +155,7 @@ header {
 .search-bar {
     position: relative;
     margin-bottom: 1.5rem;
+    flex-shrink: 0;
 }
 
 .search-bar input {
@@ -162,6 +180,7 @@ header {
     margin-bottom: 1.5rem;
     display: flex;
     gap: 1rem;
+    flex-shrink: 0;
 }
 
 .btn-filter {
@@ -183,6 +202,10 @@ header {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0; /* Allows flex children to scroll */
+    padding-bottom: 1rem;
 }
 
 .task-item {
@@ -214,6 +237,7 @@ header {
 
 .task-info {
     flex: 1;
+    min-width: 0; /* Allows text truncation */
 }
 
 .task-title {
@@ -223,6 +247,7 @@ header {
     align-items: center;
     flex-wrap: wrap;
     gap: 0.5rem;
+    word-break: break-word;
 }
 
 .task-desc {
@@ -230,6 +255,7 @@ header {
     opacity: 0.8;
     font-size: 0.9rem;
     margin-bottom: 0.5rem;
+    word-break: break-word;
 }
 
 .task-date {
@@ -241,6 +267,7 @@ header {
 .task-actions {
     display: flex;
     gap: 0.5rem;
+    flex-shrink: 0;
 }
 
 .task-btn {
@@ -279,6 +306,7 @@ header {
     border-radius: 4px;
     font-size: 0.8rem;
     font-weight: bold;
+    flex-shrink: 0;
 }
 
 .priority-low {
@@ -303,6 +331,7 @@ header {
     font-size: 0.8rem;
     background-color: #e2e3e5;
     color: #383d41;
+    flex-shrink: 0;
 }
 
 .btn-icon {
@@ -328,11 +357,12 @@ header {
     height: 100%;
     background-color: rgba(0,0,0,0.5);
     backdrop-filter: blur(2px);
+    overflow-y: auto;
 }
 
 .modal-content {
     background-color: var(--light-bg);
-    margin: 10% auto;
+    margin: 5% auto;
     padding: 2rem;
     border-radius: 8px;
     width: 500px;
@@ -340,6 +370,8 @@ header {
     position: relative;
     box-shadow: 0 4px 20px rgba(0,0,0,0.2);
     animation: modalFadeIn 0.3s;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .close {
@@ -431,6 +463,11 @@ header {
 }
 
 @media (max-width: 768px) {
+    :root {
+        --sidebar-width: 100%;
+        --header-height: 70px;
+    }
+    
     .container {
         flex-direction: column;
     }
@@ -438,10 +475,12 @@ header {
     .sidebar {
         width: 100%;
         padding: 1rem;
+        order: 2;
     }
     
     .content {
         padding: 1.5rem;
+        order: 1;
     }
     
     .todo-header {
@@ -449,4 +488,27 @@ header {
         align-items: flex-start;
         gap: 1rem;
     }
+    
+    .modal-content {
+        margin: 2rem auto;
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
 }
