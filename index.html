@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header>
+            <h1>Todo App</h1>
+            <div class="header-controls">
+                <button id="theme-toggle" class="btn-icon">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="user-info">
+                    <span>Selamat datang, User!</span>
+                </div>
+            </div>
+        </header>
+        
+        <div class="container">
+            <aside class="sidebar">
+                <nav>
+                    <ul>
+                        <li class="active"><a href="#"><i class="fas fa-tasks"></i> Tugas Saya</a></li>
+                        <li><a href="#"><i class="fas fa-cog"></i> Pengaturan</a></li>
+                    </ul>
+                </nav>
+            </aside>
+            
+            <main class="content">
+                <div class="todo-header">
+                    <h2>Tugas Saya</h2>
+                    <button id="add-task" class="btn-primary"><i class="fas fa-plus"></i> Tambah Tugas</button>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Cari tugas...">
+                    <i class="fas fa-search"></i>
+                </div>
+                
+                <div class="filters">
+                    <button class="btn-filter active" data-filter="all">Semua</button>
+                    <button class="btn-filter" data-filter="active">Belum Selesai</button>
+                    <button class="btn-filter" data-filter="completed">Selesai</button>
+                </div>
+                
+                <div class="todo-list" id="todo-list">
+                    <!-- Daftar tugas akan muncul di sini -->
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Modal untuk menambah tugas -->
+    <div id="task-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Tambah Tugas Baru</h3>
+            <form id="task-form">
+                <div class="form-group">
+                    <label for="task-title">Judul Tugas</label>
+                    <input type="text" id="task-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="task-desc">Deskripsi</label>
+                    <textarea id="task-desc"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="task-date">Tanggal Jatuh Tempo</label>
+                    <input type="date" id="task-date">
+                </div>
+                <div class="form-group">
+                    <label for="task-priority">Prioritas</label>
+                    <select id="task-priority" required>
+                        <option value="low">Rendah</option>
+                        <option value="medium" selected>Sedang</option>
+                        <option value="high">Tinggi</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="task-category">Kategori</label>
+                    <input type="text" id="task-category" list="categories">
+                    <datalist id="categories">
+                        <option value="Work">
+                        <option value="Study">
+                        <option value="Personal">
+                        <option value="Health">
+                        <option value="Finance">
+                    </datalist>
+                </div>
+                <button type="submit" class="btn-primary">Simpan</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal konfirmasi hapus -->
+    <div id="delete-modal" class="modal">
+        <div class="modal-content">
+            <h3>Konfirmasi Hapus</h3>
+            <p>Apakah Anda yakin ingin menghapus tugas ini?</p>
+            <div class="modal-actions">
+                <button id="confirm-delete" class="btn-danger">Hapus</button>
+                <button id="cancel-delete" class="btn-secondary">Batal</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
